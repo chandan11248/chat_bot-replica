@@ -20,9 +20,9 @@ if user_input:
         st.text(user_input)
     inital_state={"messages":user_input}
     result=chatbot.invoke(inital_state,config=CONFIG)
+
+
     ai_message = result['messages'][-1].content
-
-
 
  # Display with streaming effect
     with st.chat_message('assistant'):
@@ -33,6 +33,15 @@ if user_input:
             placeholder.markdown(streamed_text + "▌")
             time.sleep(0.003)  # Adjust speed here
         placeholder.markdown(streamed_text)
+
+# simple way 
+        #  ai_message = st.write_stream(
+        #     message_chunk.content for message_chunk, metadata in chatbot.stream(
+        #         {'messages': [HumanMessage(content=user_input)]},
+        #         config= {'configurable': {'thread_id': 'thread-1'}},
+        #         stream_mode= 'messages'
+        #     )
+        # )
 
     # Add to history
     st.session_state['message_history'].append({'role': 'assistant', 'content': ai_message})
